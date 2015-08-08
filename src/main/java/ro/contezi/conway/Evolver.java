@@ -13,4 +13,12 @@ public class Evolver {
         return evolved;
     }
 
+    public static Collection<Cell> evolveFor(int turns, Collection<Cell> cells) {
+        Cell[] evolutionCells = cells.toArray(new Cell[cells.size()]);
+        for (int i = 0; i < turns-1; i++) {
+            Collection<Cell> evolved = evolve(evolutionCells);
+            evolutionCells = evolved.toArray(new Cell[evolved.size()]);
+        }
+        return evolve(evolutionCells);
+    }
 }

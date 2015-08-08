@@ -3,6 +3,12 @@ package ro.contezi.conway;
 import java.util.Collection;
 
 public class Main {
+    
+    String pattern = "O.....O."+
+                     "..O...O."+
+                     "..O..O.O"+
+                     ".O.O....";
+    
     public static void main(String args[]) {
         Cell[] cells = new Cell[] { new Cell(0, 0), new Cell(0, 1), new Cell(1, 0), new Cell(1, -1), new Cell(-1, 0) };
 
