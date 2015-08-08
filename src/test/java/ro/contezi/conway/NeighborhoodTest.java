@@ -12,6 +12,7 @@ public class NeighborhoodTest {
     private Cell adiacentOnX;
     private Cell adiacentOnY;
     private Cell farOnX;
+    private Cell farOnY;
     
     @Before
     public void setUp() {
@@ -19,6 +20,7 @@ public class NeighborhoodTest {
         adiacentOnX = new Cell(1, 0);
         adiacentOnY = new Cell(0, 1);
         farOnX = new Cell(10, 1);
+        farOnY = new Cell(-1, 10);
     }
     
     @Test
@@ -45,9 +47,14 @@ public class NeighborhoodTest {
     public void farCellOnXIsNotNeighborOfCell() throws Exception {
         assertThat(neighbors(farOnX, origin)).isFalse();
     }
+    
+    @Test
+    public void farCellOnYIsNotNeighborOfCell() throws Exception {
+        assertThat(neighbors(farOnY, origin)).isFalse();
+    }
 
     private boolean neighbors(Cell cell, Cell neighbor) {
-        if (farOn(Cell::getX, cell, neighbor)) {
+        if (farOn(Cell::getX, cell, neighbor) || farOn(Cell::getY, cell, neighbor)) {
             return false;
         }
         return adiacentOn(Cell::getX, cell, neighbor) ||
@@ -55,10 +62,14 @@ public class NeighborhoodTest {
     }
     
     private boolean farOn(Function<Cell, Integer> coordinate, Cell cell, Cell possibleNeighbor) {
-        return Math.abs(coordinate.apply(cell) - coordinate.apply(possibleNeighbor)) > 1;
+        return distanceOn(coordinate, cell, possibleNeighbor) > 1;
     }
 
     private boolean adiacentOn(Function<Cell, Integer> coordinate, Cell cell, Cell possibleNeighbor) {
-        return Math.abs(coordinate.apply(cell) - coordinate.apply(possibleNeighbor)) == 1;
+        return distanceOn(coordinate, cell, possibleNeighbor) == 1;
+    }
+    
+    private int distanceOn(Function<Cell, Integer> coordinate, Cell cell, Cell possibleNeighbor) {
+        return Math.abs(coordinate.apply(cell) - coordinate.apply(possibleNeighbor));
     }
 }
