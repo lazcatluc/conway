@@ -9,6 +9,10 @@ public class Cells {
         return new Cell(1, 0);
     }
     
+    public static Cell adiacentOnXandY() {
+        return new Cell(1, 1);
+    }
+    
     public static Cell adiacentOnY() {
         return new Cell(0, 1);
     }
