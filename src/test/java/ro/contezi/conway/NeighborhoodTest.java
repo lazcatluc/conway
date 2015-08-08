@@ -11,12 +11,14 @@ public class NeighborhoodTest {
     private Cell origin;
     private Cell adiacentOnX;
     private Cell adiacentOnY;
+    private Cell farOnX;
     
     @Before
     public void setUp() {
         origin = new Cell(0, 0);
         adiacentOnX = new Cell(1, 0);
         adiacentOnY = new Cell(0, 1);
+        farOnX = new Cell(10, 1);
     }
     
     @Test
@@ -38,12 +40,24 @@ public class NeighborhoodTest {
     public void adiacentCellOnYIsNeighborOfCell() throws Exception {
         assertThat(neighbors(adiacentOnY, origin)).isTrue();
     }
+    
+    @Test
+    public void farCellOnXIsNotNeighborOfCell() throws Exception {
+        assertThat(neighbors(farOnX, origin)).isFalse();
+    }
 
     private boolean neighbors(Cell cell, Cell neighbor) {
+        if (farOn(Cell::getX, cell, neighbor)) {
+            return false;
+        }
         return adiacentOn(Cell::getX, cell, neighbor) ||
                 adiacentOn(Cell::getY, cell, neighbor);
     }
     
+    private boolean farOn(Function<Cell, Integer> coordinate, Cell cell, Cell possibleNeighbor) {
+        return Math.abs(coordinate.apply(cell) - coordinate.apply(possibleNeighbor)) > 1;
+    }
+
     private boolean adiacentOn(Function<Cell, Integer> coordinate, Cell cell, Cell possibleNeighbor) {
         return Math.abs(coordinate.apply(cell) - coordinate.apply(possibleNeighbor)) == 1;
     }
