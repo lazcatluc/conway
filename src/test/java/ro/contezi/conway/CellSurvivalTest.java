@@ -30,13 +30,14 @@ public class CellSurvivalTest {
 
     private Collection<Cell> survivors(Cell... cells) {
         return Arrays.asList(cells).stream().filter(cell -> {
-            long neighborsCount = neighborsCount(cell, cells);
+            int neighborsCount = neighborsCount(cell, cells);
             return neighborsCount == 2 || neighborsCount == 3;
         }).collect(Collectors.toList());
     }
 
-    private long neighborsCount(Cell cell, Cell[] cells) {
-        return Arrays.asList(cells).stream().filter(possibleNeighbor -> Neighbors.neighbors(cell, possibleNeighbor))
-                .count();
+    private int neighborsCount(Cell cell, Cell[] cells) {
+        Collection<Cell> neighbors = Neighbors.of(cell);
+        neighbors.retainAll(Arrays.asList(cells));
+        return neighbors.size();
     }
 }
