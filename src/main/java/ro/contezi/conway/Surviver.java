@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 public class Surviver {
 
     public static Collection<Cell> survivors(Cell... cells) {
-        return Arrays.asList(cells).stream().filter(cell -> {
+        return Arrays.asList(cells).parallelStream().filter(cell -> {
             int neighborsCount = neighborsCount(cell, cells);
             return neighborsCount == 2 || neighborsCount == 3;
         }).collect(Collectors.toList());

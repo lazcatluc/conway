@@ -13,7 +13,7 @@ public class Main {
         Collection<Cell> cells = PatternReader.read(pattern, pattern.length() / 4, 4);
         
         int step = 1000;
-        for (int i = 1; i < 18; i ++) {
+        for (int i = 1; i < 20; i ++) {
             cells = Evolver.evolveFor(step, cells);
             System.out.println((i*step)+": "+cells.size());
         }
