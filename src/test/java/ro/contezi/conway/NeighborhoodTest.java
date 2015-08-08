@@ -2,6 +2,8 @@ package ro.contezi.conway;
 
 import static org.assertj.core.api.StrictAssertions.assertThat;
 
+import java.util.function.Function;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,7 +40,11 @@ public class NeighborhoodTest {
     }
 
     private boolean neighbors(Cell cell, Cell neighbor) {
-        return Math.abs(cell.getY() - neighbor.getY()) == 1 ||
-                Math.abs(cell.getX() - neighbor.getX()) == 1;
+        return adiacentOn(Cell::getX, cell, neighbor) ||
+                adiacentOn(Cell::getY, cell, neighbor);
+    }
+    
+    private boolean adiacentOn(Function<Cell, Integer> coordinate, Cell cell, Cell possibleNeighbor) {
+        return Math.abs(coordinate.apply(cell) - coordinate.apply(possibleNeighbor)) == 1;
     }
 }
