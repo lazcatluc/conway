@@ -17,9 +17,7 @@ public class CellEvolutionTest {
 
     @Test
     public void cellWithTwoNeighborsSurvives() throws Exception {
-        Cell origin = origin();
-
-        assertThat(evolve(origin, adiacentOnX(), adiacentOnY())).contains(origin);
+        assertThat(evolve(origin(), adiacentOnX(), adiacentOnY())).contains(origin());
     }
 
     private Collection<Cell> evolve(Cell... cells) {
