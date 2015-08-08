@@ -14,4 +14,8 @@ public class Cell {
         return x;
     }
 
+    public int getY() {
+        return y;
+    }
+
 }
