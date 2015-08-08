@@ -5,22 +5,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
+import static ro.contezi.conway.Cells.*;
 
 import org.junit.Test;
 
 public class CellEvolutionTest {
     @Test
     public void singleCellDies() throws Exception {
-        assertThat(evolve(new Cell(0, 0))).isEmpty();
+        assertThat(evolve(origin())).isEmpty();
     }
 
     @Test
     public void cellWithTwoNeighborsSurvives() throws Exception {
-        Cell origin = new Cell(0, 0);
-        Cell neighborOnX = new Cell(1, 0);
-        Cell neighborOnY = new Cell(0, 1);
+        Cell origin = origin();
 
-        assertThat(evolve(origin, neighborOnX, neighborOnY)).contains(origin);
+        assertThat(evolve(origin, adiacentOnX(), adiacentOnY())).contains(origin);
     }
 
     private Collection<Cell> evolve(Cell... cells) {
