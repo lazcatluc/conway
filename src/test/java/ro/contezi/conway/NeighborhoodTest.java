@@ -2,23 +2,27 @@ package ro.contezi.conway;
 
 import static org.assertj.core.api.StrictAssertions.assertThat;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class NeighborhoodTest {
-    @Test
-    public void cellIsNeighborOfAdiacentCells() throws Exception {
-        Cell cell = new Cell(0, 0);
-        Cell neighbor = new Cell(1, 0);
-        
-        assertThat(neighbors(cell, neighbor)).isTrue();
+    private Cell origin;
+    private Cell adiacentOnX;
+    
+    @Before
+    public void setUp() {
+        origin = new Cell(0, 0);
+        adiacentOnX = new Cell(1, 0);
     }
     
     @Test
-    public void adiacentCellIsNeighborOfCell() throws Exception {
-        Cell cell = new Cell(0, 0);
-        Cell neighbor = new Cell(1, 0);
-        
-        assertThat(neighbors(neighbor, cell)).isTrue();
+    public void cellIsNeighborOfAdiacentCellsOnX() throws Exception {
+        assertThat(neighbors(origin, adiacentOnX)).isTrue();
+    }
+    
+    @Test
+    public void adiacentCellIsOnXNeighborOfCell() throws Exception {
+        assertThat(neighbors(adiacentOnX, origin)).isTrue();
     }
 
     private boolean neighbors(Cell cell, Cell neighbor) {
