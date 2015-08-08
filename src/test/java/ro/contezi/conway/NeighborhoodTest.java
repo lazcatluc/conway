@@ -2,7 +2,8 @@ package ro.contezi.conway;
 
 import static org.assertj.core.api.StrictAssertions.assertThat;
 
-import java.util.function.Function;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -54,22 +55,29 @@ public class NeighborhoodTest {
     }
 
     private boolean neighbors(Cell cell, Cell neighbor) {
-        if (farOn(Cell::getX, cell, neighbor) || farOn(Cell::getY, cell, neighbor)) {
-            return false;
+        boolean adiacent = false;
+        List<Coordinate> coordinates = Arrays.asList(Cell::getX, Cell::getY);
+        for (Coordinate coordinate : coordinates) {
+            if (farOn(coordinate, cell, neighbor)) {
+                return false;
+            }
+            if (adiacentOn(coordinate, cell, neighbor)) {
+                adiacent = true;
+            }
         }
-        return adiacentOn(Cell::getX, cell, neighbor) ||
-                adiacentOn(Cell::getY, cell, neighbor);
+        
+        return adiacent;
     }
     
-    private boolean farOn(Function<Cell, Integer> coordinate, Cell cell, Cell possibleNeighbor) {
+    private boolean farOn(Coordinate coordinate, Cell cell, Cell possibleNeighbor) {
         return distanceOn(coordinate, cell, possibleNeighbor) > 1;
     }
 
-    private boolean adiacentOn(Function<Cell, Integer> coordinate, Cell cell, Cell possibleNeighbor) {
+    private boolean adiacentOn(Coordinate coordinate, Cell cell, Cell possibleNeighbor) {
         return distanceOn(coordinate, cell, possibleNeighbor) == 1;
     }
     
-    private int distanceOn(Function<Cell, Integer> coordinate, Cell cell, Cell possibleNeighbor) {
+    private int distanceOn(Coordinate coordinate, Cell cell, Cell possibleNeighbor) {
         return Math.abs(coordinate.apply(cell) - coordinate.apply(possibleNeighbor));
     }
 }
